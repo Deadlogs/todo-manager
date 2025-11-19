@@ -14,6 +14,9 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + "/public/" + startPage);
 })
 
+const { updateTask } = require('./utils/IsaacTanUtil')
+app.put('/update-task/:id', updateTask);
+
 const { viewTasks } = require('./utils/ViewTasksUtil')
 app.get('/view-tasks', viewTasks)
     
