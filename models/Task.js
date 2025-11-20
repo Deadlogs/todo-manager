@@ -1,8 +1,7 @@
 class Task {
-    constructor(name, description, dueDate, statusj, priority, imageUrl) {
-        this.name = name;
+    constructor(title, description, status, priority, dueDate, imageUrl = null) {
+        this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
         this.status = status;
         this.priority = priority;
         this.dueDate = dueDate;
