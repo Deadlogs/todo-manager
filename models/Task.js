@@ -5,7 +5,8 @@ class Task {
         this.dueDate = dueDate;
         this.status = status;
         this.priority = priority;
-        this.imageUrl = imageUrl || null;
+        this.dueDate = dueDate;
+        this.imageUrl = imageUrl;
         const timestamp = new Date().getTime();
         const random = Math.floor(Math.random() * 1000);
         this.id = timestamp + "" + random.toString().padStart(3, '0');

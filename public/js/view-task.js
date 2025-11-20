@@ -16,6 +16,7 @@ function viewTasks() {
         // Loop through each task 
         for (var i = 0; i < response.length; i++) {
             var task = response[i];
+            var imageHtml = task.imageUrl ? `<img src="${task.imageUrl}" alt="${task.title}" class="task-image">` : '';
             html += `
     <div class="task-card">
       <div class="task-header">
@@ -27,6 +28,7 @@ function viewTasks() {
       </div>
 
       <p class="task-desc">${task.description}</p>
+      ${imageHtml}
 
       <div class="task-meta">
         <div class="task-status badge ${task.status.replace(/\s+/g, '-').toLowerCase()}">
@@ -44,8 +46,11 @@ function viewTasks() {
   `;
         }
 
-        var tableContent = document.getElementById('taskList');
-        tableContent.innerHTML = html;
+        var tasksList = document.getElementById('tasksList');
+        if (tasksList) {
+            tasksList.innerHTML = html;
+        }
+        
         
     };
 
