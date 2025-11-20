@@ -1,6 +1,10 @@
 # JSON data files
 utils/tasks.json
 
+# Ignore images in uploads
+uploads/*.png
+uploads/*.jpg
+
 # Logs
 logs
 *.log
