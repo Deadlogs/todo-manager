@@ -1,27 +1,27 @@
 // Modal wiring
-const modal = document.getElementById('updateTaskModal');
-const closeModalBtn = document.getElementById('closeModal');
-const cancelBtn = document.getElementById('cancelBtn');
+const updateModal = document.getElementById('updateTaskModal');
+const closeUpdateModalBtn = document.getElementById('closeUpdateModal');
+const cancelUpdateBtn = document.getElementById('cancelUpdateBtn');
 const updateTaskForm = document.getElementById('updateTaskForm');
-closeModalBtn.addEventListener('click', closeModal);
-cancelBtn.addEventListener('click', closeModal);
+closeUpdateModalBtn.addEventListener('click', closeModal);
+cancelUpdateBtn.addEventListener('click', closeModal);
 
 window.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
+    if (e.target === updateModal) closeModal();
 });
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('show')) closeModal();
+    if (e.key === 'Escape' && updateModal.classList.contains('show')) closeModal();
 });
 
 function closeModal() {
-    modal.classList.remove('show');
+    updateModal.classList.remove('show');
     updateTaskForm.reset();
 }
 
 updateTaskForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    sendUpdate(modal.dataset.taskId);
+    sendUpdate(updateModal.dataset.taskId);
 });
 
 function openEditDialog(id) {
@@ -34,13 +34,13 @@ function openEditDialog(id) {
             let tasks = JSON.parse(request.responseText || "[]");
             const task = tasks.find(t => t.id === id);
             if (task) {
-                modal.classList.add('show')
-                modal.dataset.taskId = id;
-                document.getElementById('taskTitle').value = task.title;
-                document.getElementById('taskDescription').value = task.description;
-                document.getElementById('taskStatus').value = task.status;
-                document.getElementById('taskPriority').value = task.priority;
-                document.getElementById('taskDueDate').value = task.dueDate;
+                updateModal.classList.add('show')
+                updateModal.dataset.taskId = id;
+                document.getElementById('updateTaskTitle').value = task.title;
+                document.getElementById('updateTaskDescription').value = task.description;
+                document.getElementById('updateTaskStatus').value = task.status;
+                document.getElementById('updateTaskPriority').value = task.priority;
+                document.getElementById('updateTaskDueDate').value = task.dueDate;
             } else {
                 alert(`Could not find task. It was likely deleted.`);
             }
@@ -53,12 +53,11 @@ function openEditDialog(id) {
 
 function sendUpdate(id) {
 
-    const title = document.getElementById('taskTitle').value.trim();
-    const description = document.getElementById('taskDescription').value;
-    const status = document.getElementById('taskStatus').value;
-    const priority = document.getElementById('taskPriority').value;
-    const dueDate = document.getElementById('taskDueDate').value;
-
+    const title = document.getElementById('updateTaskTitle').value.trim();
+    const description = document.getElementById('updateTaskDescription').value;
+    const status = document.getElementById('updateTaskStatus').value;
+    const priority = document.getElementById('updateTaskPriority').value;
+    const dueDate = document.getElementById('updateTaskDueDate').value;
     if (!title || !dueDate) {
         alert('Title and Due Date are required!');
         return;
