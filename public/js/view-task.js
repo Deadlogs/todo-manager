@@ -16,17 +16,19 @@ function viewTasks() {
         // Loop through each task 
         for (var i = 0; i < response.length; i++) {
             var task = response[i];
+            var imageHtml = task.imageUrl ? `<img src="${task.imageUrl}" alt="${task.title}" class="task-image">` : '';
             html += `
     <div class="task-card">
       <div class="task-header">
         <p class="task-title">${task.title}</p>
         <div class="task-actions">
-          <button class="btn-edit" data-id="${task.id}">✏️</button>
+          <button class="btn-edit" data-id="${task.id}" onclick="openEditDialog('${task.id}')">✏️</button>
           <button class="btn-delete" data-id="${task.id}">🗑️</button>
         </div>
       </div>
 
       <p class="task-desc">${task.description}</p>
+      ${imageHtml}
 
       <div class="task-meta">
         <div class="task-status badge ${task.status.replace(/\s+/g, '-').toLowerCase()}">
@@ -37,15 +39,18 @@ function viewTasks() {
         </div>
         <div class="task-date">
           <i class="calendar-icon">📅</i>
-          <span class="date-text">${task.dueDate}</span>
+          <span class="date-text">${formatDate(task.dueDate)}</span>
         </div>
       </div>
     </div>
   `;
         }
 
-        var tableContent = document.getElementById('taskList');
-        tableContent.innerHTML = html;
+        var tasksList = document.getElementById('tasksList');
+        if (tasksList) {
+            tasksList.innerHTML = html;
+        }
+        
         
     };
 
@@ -60,3 +65,7 @@ function viewTasks() {
     request.send();
 }
 
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
