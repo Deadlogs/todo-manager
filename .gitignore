@@ -146,7 +146,7 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 # Markdown files
-.md
+*.md
 
 # Playwright
 test-results/
