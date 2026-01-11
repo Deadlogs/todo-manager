@@ -154,3 +154,6 @@ playwright-report/
 
 # Test backup files
 utils/tasks.backup.json
+
+# claude
+.claude/
