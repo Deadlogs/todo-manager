@@ -144,3 +144,13 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Markdown files
+.md
+
+# Playwright
+test-results/
+playwright-report/
+
+# Test backup files
+utils/tasks.backup.json
