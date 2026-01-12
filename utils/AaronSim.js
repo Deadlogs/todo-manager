@@ -2,6 +2,14 @@ const fs = require("fs").promises;
 const path = require("path");
 const TASKS_FILE = path.join("utils", "tasks.json");
 
+// Suppress noisy error logging during tests (Jest sets NODE_ENV=test)
+const isTestEnv = process.env.NODE_ENV === "test";
+const logError = (...args) => {
+  if (!isTestEnv) {
+    console.error(...args);
+  }
+};
+
 /**
  * DELETE Task - High Complexity Implementation
  *
@@ -45,7 +53,7 @@ async function deleteTask(req, res) {
       allTasks = JSON.parse(data);
     } catch (parseError) {
       // Error Case 4: Invalid JSON in tasks.json
-      console.error("JSON parse error:", parseError);
+      logError("JSON parse error:", parseError);
       return res.status(500).json({
         message: "Database file is corrupted. Unable to parse tasks data.",
         error: "INVALID_JSON",
@@ -62,14 +70,14 @@ async function deleteTask(req, res) {
       });
     } else if (error.code === "EACCES") {
       // Permission denied
-      console.error("File access error:", error);
+      logError("File access error:", error);
       return res.status(500).json({
         message: "Permission denied accessing tasks database.",
         error: "FILE_ACCESS_DENIED",
       });
     } else {
       // Other file system errors
-      console.error("Error reading tasks file:", error);
+      logError("Error reading tasks file:", error);
       return res.status(500).json({
         message: "Error accessing tasks database.",
         error: "FILE_READ_ERROR",
@@ -117,7 +125,7 @@ async function deleteTask(req, res) {
     });
   } catch (error) {
     // Error Case 3: File write errors
-    console.error("Error writing tasks file after deletion:", error);
+    logError("Error writing tasks file after deletion:", error);
 
     if (error.code === "EACCES") {
       return res.status(500).json({
